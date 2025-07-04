@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sqlite/DBHelper.dart'; // Ma'lumotlar bazasi bilan ishlovchi klassni import qilamiz
+
+import 'ContactProvider.dart';
 import 'ContactsPage.dart'; // Kontaktlar sahifasini import qilamiz
 
 // Ilovani ishga tushurishdan oldin async funksiyani chaqirish
@@ -15,13 +18,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo', // Ilova sarlavhasi (Android task managerda ko‘rinadi)
-      theme: ThemeData(
-        // Ilovaning umumiy mavzusi (Theme)
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple), // Rangi sxemasi (asosiy rang sifatida deepPurple)
-      ),
-      home: ContactsPage(), // Ilovani ochganda birinchi ochiladigan sahifa
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => ContactProvider())
+        ],
+        child: MaterialApp(
+          title: 'Flutter Demo',
+          // Ilova sarlavhasi (Android task managerda ko‘rinadi)
+          theme: ThemeData(
+            // Ilovaning umumiy mavzusi (Theme)
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors
+                .deepPurple), // Rangi sxemasi (asosiy rang sifatida deepPurple)
+          ),
+          home: ContactsPage(), // Ilovani ochganda birinchi ochiladigan sahifa
+        )
     );
   }
 }
